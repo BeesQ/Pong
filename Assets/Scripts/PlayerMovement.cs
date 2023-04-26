@@ -12,13 +12,20 @@ public class PlayerMovement : MonoBehaviour
         myRb = gameObject.GetComponent<Rigidbody2D>();
     }
 
-    public void HandleMovement()
+    public void HandleMovement(int playerType)
     {
-        var y = Input.GetAxisRaw("Vertical") * speedForce;
+        var y = Input.GetAxisRaw("Vertical" + playerType.ToString()) * speedForce;
         var newVelocity = new Vector2(0, y) * Time.fixedDeltaTime;
 
         MyBounds cameraBounds = CameraManager.GetCameraBounds();
-        // transform.position = new Vector2(transform.position.x, Mathf.Clamp(transform.position.y, cameraBounds.minY, cameraBounds.maxY));
+        ClampVelocityToCameraBounds(ref newVelocity);
+
+        myRb.velocity = newVelocity;
+    }
+
+    private void ClampVelocityToCameraBounds(ref Vector2 newVelocity)
+    {
+        MyBounds cameraBounds = CameraManager.GetCameraBounds();
         if (transform.position.y > cameraBounds.maxY && newVelocity.y > 0)
         {
             newVelocity = Vector2.zero;
@@ -27,6 +34,6 @@ public class PlayerMovement : MonoBehaviour
         {
             newVelocity = Vector2.zero;
         }
-        myRb.velocity = newVelocity;
     }
+
 }

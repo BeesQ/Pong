@@ -15,6 +15,6 @@ public class PlayerManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        myPlayerMovement.HandleMovement();
+        myPlayerMovement.HandleMovement((int)player);
     }
 }
