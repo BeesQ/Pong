@@ -5,6 +5,7 @@ using UnityEngine;
 public class BallMovement : MonoBehaviour
 {
     Rigidbody2D myRb = null;
+    [SerializeField] SpriteRenderer mySpriteRenderer = null;
     [SerializeField] float speedForce = 10f;
 
     private void Awake()
@@ -22,34 +23,48 @@ public class BallMovement : MonoBehaviour
 
     private void Update()
     {
+        // MyBounds cameraBounds = CameraManager.GetCameraBounds();
+        // // Check if the ball is out of the camera boundaries
+        // if (transform.position.x > cameraBounds.maxX || transform.position.x < cameraBounds.minX)
+        // {
+        //     // Reflect the ball's direction horizontally
+        //     myRb.velocity = new Vector2(-myRb.velocity.x, myRb.velocity.y);
+        // }
+        // if (transform.position.y > cameraBounds.maxY || transform.position.y < cameraBounds.minY)
+        // {
+        //     // Reflect the ball's direction vertically
+        //     myRb.velocity = new Vector2(myRb.velocity.x, -myRb.velocity.y);
+        // }
+
+        myRb.velocity = ClampVelocityToCameraBounds();
+    }
+
+    private Vector2 ClampVelocityToCameraBounds()
+    {
         MyBounds cameraBounds = CameraManager.GetCameraBounds();
-        // Check if the ball is out of the camera boundaries
-        if (transform.position.x > cameraBounds.maxX || transform.position.x < cameraBounds.minX)
+        var width = mySpriteRenderer.bounds.size.x;
+        var height = mySpriteRenderer.bounds.size.y;
+
+        if (transform.position.x > cameraBounds.maxX - (height / 2) && myRb.velocity.x > 0)
         {
-            // Reflect the ball's direction horizontally
-            myRb.velocity = new Vector2(-myRb.velocity.x, myRb.velocity.y);
+            return new Vector2(-myRb.velocity.x, myRb.velocity.y);
         }
-        if (transform.position.y > cameraBounds.maxY || transform.position.y < cameraBounds.minY)
+        else if (transform.position.x < cameraBounds.minX + (height / 2) && myRb.velocity.x < 0)
         {
-            // Reflect the ball's direction vertically
-            myRb.velocity = new Vector2(myRb.velocity.x, -myRb.velocity.y);
+            return new Vector2(-myRb.velocity.x, myRb.velocity.y);
         }
 
+        else if (transform.position.y > cameraBounds.maxY - (height / 2) && myRb.velocity.y > 0)
+        {
+            return new Vector2(myRb.velocity.x, -myRb.velocity.y);
+        }
 
-        // if (transform.position.y > cameraBounds.maxY && newVelocity.y > 0)
-        // {
-        //     newVelocity = Vector2.zero;
-        // }
-        // else if (transform.position.y < cameraBounds.minY && newVelocity.y < 0)
-        // {
-        //     newVelocity = Vector2.zero;
-        // }
+        else if (transform.position.y < cameraBounds.minY + (height / 2) && myRb.velocity.y < 0)
+        {
+            return new Vector2(myRb.velocity.x, -myRb.velocity.y);
+        }
 
-        // myRb.velocity = direction * speed;
-
-
-
-        // myRb.AddForce(new Vector2(speedForce, speedForce), ForceMode2D.Impulse);
+        return myRb.velocity;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
