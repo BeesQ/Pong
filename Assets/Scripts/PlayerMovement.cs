@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D myRb = null;
+    [SerializeField] SpriteRenderer mySpriteRenderer = null;
     [SerializeField] float speedForce = 10f;
 
     private void Awake()
@@ -26,14 +27,15 @@ public class PlayerMovement : MonoBehaviour
     private void ClampVelocityToCameraBounds(ref Vector2 newVelocity)
     {
         MyBounds cameraBounds = CameraManager.GetCameraBounds();
-        if (transform.position.y > cameraBounds.maxY && newVelocity.y > 0)
+        var height = mySpriteRenderer.bounds.size.y;
+
+        if (transform.position.y > cameraBounds.maxY - (height / 2) && newVelocity.y > 0)
         {
             newVelocity = Vector2.zero;
         }
-        else if (transform.position.y < cameraBounds.minY && newVelocity.y < 0)
+        else if (transform.position.y < cameraBounds.minY + (height / 2) && newVelocity.y < 0)
         {
             newVelocity = Vector2.zero;
         }
     }
-
 }
