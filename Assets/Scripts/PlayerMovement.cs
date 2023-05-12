@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] SpriteRenderer mySpriteRenderer = null;
     [SerializeField] float speedForce = 10f;
 
+
+
     private void Awake()
     {
         myRb = gameObject.GetComponent<Rigidbody2D>();

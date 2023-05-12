@@ -8,6 +8,8 @@ public class BallMovement : MonoBehaviour
     [SerializeField] SpriteRenderer mySpriteRenderer = null;
     [SerializeField] float speed = 10f;
 
+
+
     private void Awake()
     {
         myRb = gameObject.GetComponent<Rigidbody2D>();
@@ -27,10 +29,12 @@ public class BallMovement : MonoBehaviour
 
         if (transform.position.x > cameraBounds.maxX - (height / 2) && myRb.velocity.x > 0)
         {
+            GameManager.Instance.AddPlayerPoints(GameManager.PlayerType.Two, 1);
             return new Vector2(-myRb.velocity.x, myRb.velocity.y);
         }
         else if (transform.position.x < cameraBounds.minX + (height / 2) && myRb.velocity.x < 0)
         {
+            GameManager.Instance.AddPlayerPoints(GameManager.PlayerType.One, 1);
             return new Vector2(-myRb.velocity.x, myRb.velocity.y);
         }
 

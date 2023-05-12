@@ -6,6 +6,8 @@ public class BallManager : MonoBehaviour
 {
     BallMovement myBallMovement = null;
 
+
+
     void Awake()
     {
         myBallMovement = gameObject.GetComponent<BallMovement>();

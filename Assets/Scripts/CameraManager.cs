@@ -6,6 +6,8 @@ public static class CameraManager
 {
     static Camera myCamera = Camera.main;
 
+
+
     public static MyBounds GetCameraBounds()
     {
         float myCameraHeight = 2f * myCamera.orthographicSize;
