@@ -70,6 +70,7 @@ public class BallMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         ContactPoint2D contact = collision.contacts[0];
+        Debug.Log(contact);
         var x = myRb.velocity.x;
         var y = myRb.velocity.y;
 
