@@ -29,12 +29,14 @@ public class BallMovement : MonoBehaviour
 
         if (transform.position.x > cameraBounds.maxX - (height / 2) && myRb.velocity.x > 0)
         {
-            GameManager.Instance.AddPlayerPoints(GameManager.PlayerType.Two, 1);
+            GameManager.Instance.AddPlayerPoints(GameManager.PlayerType.One, 1);
+            transform.position = Vector3.zero;
             return new Vector2(-myRb.velocity.x, myRb.velocity.y);
         }
         else if (transform.position.x < cameraBounds.minX + (height / 2) && myRb.velocity.x < 0)
         {
-            GameManager.Instance.AddPlayerPoints(GameManager.PlayerType.One, 1);
+            GameManager.Instance.AddPlayerPoints(GameManager.PlayerType.Two, 1);
+            transform.position = Vector3.zero;
             return new Vector2(-myRb.velocity.x, myRb.velocity.y);
         }
 
