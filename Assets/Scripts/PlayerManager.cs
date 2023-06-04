@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
     // public GameManager.PlayerType playerType;
     public enum PlayerType { One, Two };
-    [SerializeField] private PlayerType player;
+    public PlayerType myPlayerType;
     PlayerMovement myPlayerMovement = null;
 
 
@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        myPlayerMovement.HandleMovement((int)player);
+        myPlayerMovement.HandleMovement((int)myPlayerType);
     }
 }
 

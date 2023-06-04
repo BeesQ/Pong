@@ -6,7 +6,8 @@ public class BallMovement : MonoBehaviour
 {
     Rigidbody2D myRb = null;
     [SerializeField] SpriteRenderer mySpriteRenderer = null;
-    [SerializeField] float speed = 10f;
+    public float speed = 10f;
+    [HideInInspector] public int lastPlayerTouch = 0;
 
 
 
@@ -55,6 +56,11 @@ public class BallMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.TryGetComponent<PlayerManager>(out PlayerManager myPlayer))
+        {
+            lastPlayerTouch = (int)myPlayer.myPlayerType;
+        }
+
         ContactPoint2D contact = collision.contacts[0];
 
         var x = myRb.velocity.x;
